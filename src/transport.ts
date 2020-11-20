@@ -166,7 +166,7 @@ export class PinoSentryTransport {
     };
 
     if (options.dedupe) {
-      validatedOptions.integrations = [new Dedupe()]
+      validatedOptions.integrations = [new Dedupe()];
     }
 
     return validatedOptions;
