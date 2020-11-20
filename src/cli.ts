@@ -19,7 +19,8 @@ function main() {
     .option('--maxValueLength <maxValueLength>', 'Maximum number of chars a single value can have before it will be truncated.')
     .option('--release <release>', 'The release identifier used when uploading respective source maps.')
     .option('-l, --level <level>', 'The minimum level for a log to be reported to Sentry')
-    .action(({ dsn, serverName, environment, debug, sampleRate, maxBreadcrumbs, dist, logLevel, maxValueLength, release, level }) => {
+    .option('--dedupe', 'Whether to use the Dedupe integration for event deduplication')
+    .action(({ dsn, serverName, environment, debug, sampleRate, maxBreadcrumbs, dist, logLevel, maxValueLength, release, level, dedupe }) => {
       try {
         const writeStream = createWriteStream({
           dsn,
@@ -33,6 +34,7 @@ function main() {
           maxValueLength,
           release,
           level,
+          dedupe
         });
         // Echo to stdout
         process.stdin.pipe(process.stdout);

@@ -35,21 +35,22 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@sentry/node": "^5.21.1",
-    "commander": "^2.20.0",
-    "pumpify": "^2.0.1",
-    "split2": "^3.1.1",
-    "through2": "^3.0.1"
+    "@sentry/integrations": "5.21.1",
+    "@sentry/node": "5.21.1",
+    "commander": "2.20.0",
+    "pumpify": "2.0.1",
+    "split2": "3.1.1",
+    "through2": "3.0.1"
   },
   "devDependencies": {
-    "@types/node": "^12.6.9",
-    "@types/pumpify": "^1.4.1",
-    "@types/split2": "^2.1.6",
-    "@types/through2": "^2.0.34",
-    "@typescript-eslint/eslint-plugin": "^2.34.0",
-    "@typescript-eslint/parser": "^2.34.0",
-    "eslint": "^6.8.0",
-    "pino": "^6.5.1",
-    "typescript": "^3.9.7"
+    "@types/node": "12.6.9",
+    "@types/pumpify": "1.4.1",
+    "@types/split2": "2.1.6",
+    "@types/through2": "2.0.34",
+    "@typescript-eslint/eslint-plugin": "2.34.0",
+    "@typescript-eslint/parser": "2.34.0",
+    "eslint": "6.8.0",
+    "pino": "6.5.1",
+    "typescript": "3.9.7"
   }
 }

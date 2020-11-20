@@ -3,6 +3,7 @@ import split from 'split2';
 import pump from 'pumpify';
 import through from 'through2';
 import * as Sentry from '@sentry/node';
+import { Dedupe } from '@sentry/integrations';
 
 type ValueOf<T> = T extends any[] ? T[number] : T[keyof T]
 
@@ -49,6 +50,7 @@ interface PinoSentryOptions extends Sentry.NodeOptions {
   messageAttributeKey?: string;
   extraAttributeKeys?: string[];
   stackAttributeKey?: string;
+  dedupe?: boolean;
 }
 
 export class PinoSentryTransport {
@@ -151,7 +153,7 @@ export class PinoSentryTransport {
     this.extraAttributeKeys = options.extraAttributeKeys ?? this.extraAttributeKeys;
     this.messageAttributeKey = options.messageAttributeKey ?? this.messageAttributeKey;
 
-    return {
+    const validatedOptions = {
       dsn,
       // npm_package_name will be available if ran with
       // from a "script" field in package.json.
@@ -162,6 +164,12 @@ export class PinoSentryTransport {
       maxBreadcrumbs: 100,
       ...options,
     };
+
+    if (options.dedupe) {
+      validatedOptions.integrations = [new Dedupe()]
+    }
+
+    return validatedOptions;
   }
 
   private isObject(obj: any): boolean {
