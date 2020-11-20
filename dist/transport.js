@@ -138,6 +138,7 @@ class PinoSentryTransport {
     validateOptions(options) {
         var _a, _b, _c;
         const dsn = options.dsn || process.env.SENTRY_DSN;
+        const release = options.release || process.env.SENTRY_PROJECT_RELEASE;
         if (!dsn) {
             console.log('Warning: [pino-sentry] Sentry DSN must be supplied, otherwise logs will not be reported. Pass via options or `SENTRY_DSN` environment variable.');
         }
@@ -154,6 +155,7 @@ class PinoSentryTransport {
         this.messageAttributeKey = (_c = options.messageAttributeKey) !== null && _c !== void 0 ? _c : this.messageAttributeKey;
         const validatedOptions = {
             dsn,
+            release,
             // npm_package_name will be available if ran with
             // from a "script" field in package.json.
             serverName: process.env.npm_package_name || 'pino-sentry',
