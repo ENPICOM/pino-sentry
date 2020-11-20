@@ -13,4 +13,5 @@ yarn-error.log
 .vscode
 
 # Specific
-dist
+# temporarily disabled so we can include the compiled code
+# dist  
