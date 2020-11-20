@@ -107,12 +107,16 @@ class PinoSentryTransport {
         });
         const message = chunk[this.messageAttributeKey];
         const stack = chunk[this.stackAttributeKey] || '';
+        const user = chunk.user;
         Sentry.configureScope(scope => {
             if (this.isObject(tags)) {
                 Object.keys(tags).forEach(tag => scope.setTag(tag, tags[tag]));
             }
             if (this.isObject(extra)) {
                 Object.keys(extra).forEach(ext => scope.setExtra(ext, extra[ext]));
+            }
+            if (user != null && this.isObject(user)) {
+                scope.setUser(user);
             }
         });
         // Capturing Errors / Exceptions
