@@ -57,7 +57,7 @@ export class PinoSentryTransport {
   // Default minimum log level to `debug`
   minimumLogLevel: ValueOf<typeof SeverityIota> = SeverityIota[Sentry.Severity.Debug]
   messageAttributeKey = 'msg';
-  extraAttributeKeys = ['extra'];
+  extraAttributeKeys = ['extra', 'context'];
   stackAttributeKey = 'stack';
 
   public constructor(options?: PinoSentryOptions) {

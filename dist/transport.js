@@ -66,7 +66,7 @@ class PinoSentryTransport {
         // Default minimum log level to `debug`
         this.minimumLogLevel = SeverityIota[Sentry.Severity.Debug];
         this.messageAttributeKey = 'msg';
-        this.extraAttributeKeys = ['extra'];
+        this.extraAttributeKeys = ['extra', 'context'];
         this.stackAttributeKey = 'stack';
         Sentry.init(this.validateOptions(options || {}));
     }
