@@ -136,10 +136,10 @@ class PinoSentryTransport {
         }
     }
     validateOptions(options) {
-        var _a, _b, _c;
-        const dsn = options.dsn || process.env.SENTRY_DSN;
-        const release = options.release || process.env.SENTRY_PROJECT_RELEASE;
-        if (!dsn) {
+        var _a, _b, _c, _d, _e;
+        const dsn = (_a = options.dsn) !== null && _a !== void 0 ? _a : process.env.SENTRY_DSN;
+        const release = (_b = options.release) !== null && _b !== void 0 ? _b : process.env.SENTRY_PROJECT_RELEASE;
+        if (dsn == null) {
             console.log('Warning: [pino-sentry] Sentry DSN must be supplied, otherwise logs will not be reported. Pass via options or `SENTRY_DSN` environment variable.');
         }
         if (options.level) {
@@ -150,12 +150,10 @@ class PinoSentryTransport {
             // Set minimum log level
             this.minimumLogLevel = SeverityIota[options.level];
         }
-        this.stackAttributeKey = (_a = options.stackAttributeKey) !== null && _a !== void 0 ? _a : this.stackAttributeKey;
-        this.extraAttributeKeys = (_b = options.extraAttributeKeys) !== null && _b !== void 0 ? _b : this.extraAttributeKeys;
-        this.messageAttributeKey = (_c = options.messageAttributeKey) !== null && _c !== void 0 ? _c : this.messageAttributeKey;
+        this.stackAttributeKey = (_c = options.stackAttributeKey) !== null && _c !== void 0 ? _c : this.stackAttributeKey;
+        this.extraAttributeKeys = (_d = options.extraAttributeKeys) !== null && _d !== void 0 ? _d : this.extraAttributeKeys;
+        this.messageAttributeKey = (_e = options.messageAttributeKey) !== null && _e !== void 0 ? _e : this.messageAttributeKey;
         const validatedOptions = {
-            dsn,
-            release,
             // npm_package_name will be available if ran with
             // from a "script" field in package.json.
             serverName: process.env.npm_package_name || 'pino-sentry',
@@ -164,6 +162,9 @@ class PinoSentryTransport {
             sampleRate: 1.0,
             maxBreadcrumbs: 100,
             ...options,
+            // It's important that these two come after the destructuring, otherwise they will be overwritten
+            dsn,
+            release
         };
         if (options.dedupe) {
             validatedOptions.integrations = [new integrations_1.Dedupe()];

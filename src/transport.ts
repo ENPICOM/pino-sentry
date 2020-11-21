@@ -141,10 +141,10 @@ export class PinoSentryTransport {
   }
 
   private validateOptions(options: PinoSentryOptions): PinoSentryOptions {
-    const dsn = options.dsn || process.env.SENTRY_DSN;
-    const release = options.release || process.env.SENTRY_PROJECT_RELEASE
+    const dsn = options.dsn ?? process.env.SENTRY_DSN;
+    const release = options.release ?? process.env.SENTRY_PROJECT_RELEASE
 
-    if (!dsn) {
+    if (dsn == null) {
       console.log('Warning: [pino-sentry] Sentry DSN must be supplied, otherwise logs will not be reported. Pass via options or `SENTRY_DSN` environment variable.');
     }
     if (options.level) {
@@ -161,8 +161,6 @@ export class PinoSentryTransport {
     this.messageAttributeKey = options.messageAttributeKey ?? this.messageAttributeKey;
 
     const validatedOptions = {
-      dsn,
-      release,
       // npm_package_name will be available if ran with
       // from a "script" field in package.json.
       serverName: process.env.npm_package_name || 'pino-sentry',
@@ -171,6 +169,9 @@ export class PinoSentryTransport {
       sampleRate: 1.0,
       maxBreadcrumbs: 100,
       ...options,
+      // It's important that these two come after the destructuring, otherwise they will be overwritten
+      dsn,
+      release
     };
 
     if (options.dedupe) {
